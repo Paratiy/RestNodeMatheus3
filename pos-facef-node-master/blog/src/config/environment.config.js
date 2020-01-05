@@ -4,7 +4,7 @@ const {
   DB_HOST,
   DB_PORT,
   DB_USERNAME,
-  DB_NAME,
+  DB_NAME="sqlite:blog.sqlite",
   DB_PASSWORD,
   JWT_EXPIRES_IN = '24h',
   JWT_SECRET = 'stubJWT',
