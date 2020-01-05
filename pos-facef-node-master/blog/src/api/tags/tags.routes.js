@@ -9,8 +9,9 @@ export default [
     path: '/posts/{postId}/tags',
     handler: controller.list,
     config: {
+      auth: false,
       tags: ['api', 'posts', 'tags'],
-      validate: Schemas.list
+      //validate: Schemas.list
     }
   },
   {
@@ -18,8 +19,9 @@ export default [
     path: '/posts/{postId}/tags/{id}',
     handler: controller.detail,
     config: {
+      auth: false,
       tags: ['api', 'posts', 'tags'],
-      validate: Schemas.detail
+      //validate: Schemas.detail
     }
   },
   {
@@ -27,8 +29,9 @@ export default [
     path: '/posts/{postId}/tags',
     handler: controller.create,
     config: {
+      auth: false,
       tags: ['api', 'posts', 'tags'],
-      validate: Schemas.create
+      //validate: Schemas.create
     }
   },
   {
@@ -36,8 +39,9 @@ export default [
     path: '/posts/{postId}/tags/{id}',
     handler: controller.update,
     config: {
+      auth: false,
       tags: ['api', 'posts', 'tags'],
-      validate: Schemas.update
+      //validate: Schemas.update
     }
   },
   {
@@ -45,8 +49,9 @@ export default [
     path: '/posts/{postId}/tags/{id}',
     handler: controller.destroy,
     config: {
+      auth: false,
       tags: ['api', 'posts', 'tags'],
-      validate: Schemas.destroy
+      //validate: Schemas.destroy
     }
   }
 ];

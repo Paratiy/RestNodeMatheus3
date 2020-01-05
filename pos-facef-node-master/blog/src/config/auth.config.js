@@ -3,6 +3,7 @@ import HapiAuthJWT from 'hapi-auth-jwt2';
 import Env from './environment.config';
 
 const validate = async (decoded) => {
+  console.log("auth.config.validate---------------------------------------------");
   const User = instances.getModel('user');
   const user = await User.findByPk(decoded.id);
   const isValid = !!user;
@@ -12,6 +13,7 @@ const validate = async (decoded) => {
 };
 
 async function register(server) {
+  console.log("auth.config.register---------------------------------------------");
   await server.register({
     plugin: HapiAuthJWT
   });

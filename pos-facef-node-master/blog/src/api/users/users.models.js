@@ -5,10 +5,13 @@ export default (sequelize, dataTypes) => {
   class User extends Model {}
 
   User.init({
+    name: dataTypes.STRING,
+    cpforcnpj: dataTypes.STRING,
     email: dataTypes.STRING,
     password: dataTypes.STRING
   }, { sequelize, modelName: 'user', tableName: 'users' });
 
+  
   User.associate = models => {
     models.user.hasMany(models.post, { as: 'posts' });
   };

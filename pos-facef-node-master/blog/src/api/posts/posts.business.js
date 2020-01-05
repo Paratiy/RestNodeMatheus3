@@ -15,6 +15,7 @@ export default class PostsBusiness {
   }
 
   async create({ payload, auth }) {
+    console.log("posts.business.create ----------------------------------");
     const { id: userId } = auth.credentials;
 
     return postsDAO.create({ ...payload, userId });

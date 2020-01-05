@@ -9,6 +9,7 @@ export default [
     path: '/users',
     handler: controller.list,
     config: {
+      auth: false,
       tags: ['api', 'users']
     }
   },
@@ -17,6 +18,7 @@ export default [
     path: '/users/{id}',
     handler: controller.detail,
     config: {
+      auth: false,
       tags: ['api', 'users'],
       validate: Schemas.detail
     }
@@ -46,6 +48,7 @@ export default [
     path: '/users/{id}',
     handler: controller.update,
     config: {
+      auth: false,
       tags: ['api', 'users'],
       validate: Schemas.update
     }
@@ -55,6 +58,7 @@ export default [
     path: '/users/{id}',
     handler: controller.destroy,
     config: {
+      auth: false,
       tags: ['api', 'users'],
       validate: Schemas.detail
     }

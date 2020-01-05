@@ -4,7 +4,14 @@ const params = Joi.object({
   id: Joi.number().required()
 });
 
+// const payload = Joi.object({
+//   email: Joi.string().email().required(),
+//   password: Joi.string().min(6).required()
+// })
+
 const payload = Joi.object({
+  name: Joi.string().min(3).required(),
+  cpforcnpj: Joi.string().email().required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required()
 })

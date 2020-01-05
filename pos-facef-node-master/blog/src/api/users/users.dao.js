@@ -14,6 +14,8 @@ export default class UsersDAO {
   }
 
   async create(data) {
+    console.log("users.dao.create------------------------------------");
+    
     return User.create(data);
   }
 
