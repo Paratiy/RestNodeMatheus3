@@ -4,10 +4,16 @@ const params = Joi.object({
   id: Joi.number().required()
 });
 
+// const payload = Joi.object({
+//   email: Joi.string().email().required(),
+//   password: Joi.string().min(6).required()
+// })
+
 const payload = Joi.object({
-  title: Joi.string().min(5).max(100).required(),
-  content: Joi.string().min(10).required()
-});
+  user: Joi.string().required(),
+  value: Joi.string().required(),
+  product: Joi.string().required()
+})
 
 export const detail = {
   params

@@ -6,7 +6,7 @@ import { getToken, serverInject } from '../../test.utils';
 
 const { before, after, describe, it } = exports.lab = Lab.script();
 
-describe('Routes /posts', () => {
+describe('Routes /orders', () => {
   let server;
   let authorization;
 
@@ -17,13 +17,13 @@ describe('Routes /posts', () => {
 
   after(async () => {
     await server.stop();
-  });
+  })
 
-  describe('GET /posts', () => {
+  describe('GET /orders', () => {
     it('returns 200 HTTP status code', async () => {
       const res = await serverInject({
         method: 'GET',
-        url: '/posts',
+        url: '/orders',
         headers: { authorization }
       }, server);
 
@@ -31,15 +31,15 @@ describe('Routes /posts', () => {
     });
   });
 
-  describe('POST /posts', () => {
+  describe('POST /orders', () => {
     it('returns 201 HTTP status code', async () => {
       const res = await serverInject({
         method: 'POST',
-        url: '/posts',
+        url: '/orders',
         headers: { authorization },
         payload: {
-          title: 'Novo post',
-          content: 'Novo conteúdo'
+          email: 'aluno@unifacef.com.br',
+          password: 'abc123'
         }
       }, server);
 
@@ -49,7 +49,7 @@ describe('Routes /posts', () => {
     it('returns 400 HTTP status code when payload is invalid', async () => {
       const res = await serverInject({
         method: 'POST',
-        url: '/posts',
+        url: '/orders',
         headers: { authorization },
         payload: {
           title: 'Novo post'
@@ -60,17 +60,17 @@ describe('Routes /posts', () => {
     });
   });
 
-  describe('GET /posts/{id}', () => {
+  describe('GET /orders/{id}', () => {
     let post;
 
     before(async () => {
       const res = await serverInject({
         method: 'POST',
-        url: '/posts',
+        url: '/orders',
         headers: { authorization },
         payload: {
-          title: 'Novo post',
-          content: 'Novo conteúdo'
+          email: 'aluno@unifacef.com.br',
+          password: 'abc123'
         }
       }, server);
 
@@ -80,7 +80,7 @@ describe('Routes /posts', () => {
     it('returns 200 HTTP status code', async () => {
       const res = await serverInject({
         method: 'GET',
-        url: `/posts/${post.id}`,
+        url: `/orders/${post.id}`,
         headers: { authorization }
       }, server);
 
@@ -90,7 +90,7 @@ describe('Routes /posts', () => {
     it('returns 400 HTTP status code when id is not a number', async () => {
       const res = await serverInject({
         method: 'GET',
-        url: '/posts/asdf',
+        url: '/orders/asdf',
         headers: { authorization }
       }, server);
 
@@ -100,7 +100,7 @@ describe('Routes /posts', () => {
     it('returns 404 HTTP status code when post does not exist', async () => {
       const res = await serverInject({
         method: 'GET',
-        url: '/posts/0',
+        url: '/orders/0',
         headers: { authorization }
       }, server);
 
@@ -108,17 +108,17 @@ describe('Routes /posts', () => {
     });
   });
 
-  describe('PUT /posts/{id}', () => {
+  describe('PUT /orders/{id}', () => {
     let post;
 
     before(async () => {
       const res = await serverInject({
         method: 'POST',
-        url: '/posts',
+        url: '/orders',
         headers: { authorization },
         payload: {
-          title: 'Novo post',
-          content: 'Novo conteúdo'
+          email: 'aluno@unifacef.com.br',
+          password: 'abc123'
         }
       }, server);
 
@@ -128,11 +128,11 @@ describe('Routes /posts', () => {
     it('returns 200 HTTP status code', async () => {
       const res = await serverInject({
         method: 'PUT',
-        url: `/posts/${post.id}`,
+        url: `/orders/${post.id}`,
         headers: { authorization },
         payload: {
-          title: 'Novo título',
-          content: 'Novo conteúdo'
+          email: 'aluno@unifacef.com.br',
+          password: 'abc123'
         }
       }, server);
 
@@ -142,11 +142,11 @@ describe('Routes /posts', () => {
     it('returns 400 HTTP status code when payload is invalid', async () => {
       const res = await serverInject({
         method: 'PUT',
-        url: `/posts/${post.id}`,
+        url: `/orders/${post.id}`,
         headers: { authorization },
         payload: {
-          title: 'Novo título',
-          content: 'Conteúdo'
+          email: 'aluno@unifacef',
+          password: 'abc123'
         }
       }, server);
 
@@ -156,11 +156,11 @@ describe('Routes /posts', () => {
     it('returns 404 HTTP status code when post does not exist', async () => {
       const res = await serverInject({
         method: 'PUT',
-        url: '/posts/0',
+        url: '/orders/0',
         headers: { authorization },
         payload: {
-          title: 'Novo título',
-          content: 'Novo conteúdo'
+          email: 'aluno@unifacef.com.br',
+          password: 'abc123'
         }
       }, server);
 
@@ -168,17 +168,17 @@ describe('Routes /posts', () => {
     });
   });
 
-  describe('DELETE /posts/{id}', () => {
+  describe('DELETE /orders/{id}', () => {
     let post;
 
     before(async () => {
       const res = await serverInject({
         method: 'POST',
-        url: '/posts',
+        url: '/orders',
         headers: { authorization },
         payload: {
-          title: 'Novo post',
-          content: 'Novo conteúdo'
+          email: 'aluno@unifacef.com.br',
+          password: 'abc123'
         }
       }, server);
 
@@ -188,7 +188,7 @@ describe('Routes /posts', () => {
     it('returns 204 HTTP status code', async () => {
       const res = await serverInject({
         method: 'DELETE',
-        url: `/posts/${post.id}`,
+        url: `/orders/${post.id}`,
         headers: { authorization }
       }, server);
 
@@ -198,7 +198,7 @@ describe('Routes /posts', () => {
     it('returns 400 HTTP status code when id is not a number', async () => {
       const res = await serverInject({
         method: 'DELETE',
-        url: '/posts/asdf',
+        url: '/orders/asdf',
         headers: { authorization }
       }, server);
 
@@ -208,7 +208,7 @@ describe('Routes /posts', () => {
     it('returns 404 HTTP status code when post does not exist', async () => {
       const res = await serverInject({
         method: 'DELETE',
-        url: `/posts/${post.id}`,
+        url: `/orders/${post.id}`,
         headers: { authorization }
       }, server);
 

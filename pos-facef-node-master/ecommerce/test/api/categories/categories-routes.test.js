@@ -6,37 +6,24 @@ import { getToken, serverInject } from '../../test.utils';
 
 const { before, after, describe, it } = exports.lab = Lab.script();
 
-describe('Routes /posts/{postId}/tags', () => {
+describe('Routes /categories', () => {
   let server;
   let authorization;
-  let post;
 
   before(async () => {
     server = await init();
     authorization = await getToken(server);
-
-    const res = await serverInject({
-      method: 'POST',
-      url: '/posts',
-      headers: { authorization },
-      payload: {
-        title: 'Novo post',
-        content: 'Conteúdo do post'
-      }
-    }, server);
-
-    post = res.payload;
   });
 
   after(async () => {
     await server.stop();
-  });
+  })
 
-  describe('GET /posts/{postId}/tags', () => {
+  describe('GET /categories', () => {
     it('returns 200 HTTP status code', async () => {
       const res = await serverInject({
         method: 'GET',
-        url: `/posts/${post.id}/tags`,
+        url: '/categories',
         headers: { authorization }
       }, server);
 
@@ -44,14 +31,15 @@ describe('Routes /posts/{postId}/tags', () => {
     });
   });
 
-  describe('POST /posts/{postId}/tags', () => {
+  describe('POST /categories', () => {
     it('returns 201 HTTP status code', async () => {
       const res = await serverInject({
         method: 'POST',
-        url: `/posts/${post.id}/tags`,
+        url: '/categories',
         headers: { authorization },
         payload: {
-          name: 'Nova tag'
+          email: 'aluno@unifacef.com.br',
+          password: 'abc123'
         }
       }, server);
 
@@ -61,10 +49,10 @@ describe('Routes /posts/{postId}/tags', () => {
     it('returns 400 HTTP status code when payload is invalid', async () => {
       const res = await serverInject({
         method: 'POST',
-        url: `/posts/${post.id}/tags`,
+        url: '/categories',
         headers: { authorization },
         payload: {
-          title: 'Tag'
+          title: 'Novo post'
         }
       }, server);
 
@@ -72,26 +60,27 @@ describe('Routes /posts/{postId}/tags', () => {
     });
   });
 
-  describe('GET /posts/{postId}/tags/{id}', () => {
-    let tag;
+  describe('GET /categories/{id}', () => {
+    let post;
 
     before(async () => {
       const res = await serverInject({
         method: 'POST',
-        url: `/posts/${post.id}/tags`,
+        url: '/categories',
         headers: { authorization },
         payload: {
-          name: 'Nova tag'
+          email: 'aluno@unifacef.com.br',
+          password: 'abc123'
         }
       }, server);
 
-      tag = res.payload;
+      post = res.payload;
     });
 
     it('returns 200 HTTP status code', async () => {
       const res = await serverInject({
         method: 'GET',
-        url: `/posts/${post.id}/tags/${tag.id}`,
+        url: `/categories/${post.id}`,
         headers: { authorization }
       }, server);
 
@@ -101,7 +90,7 @@ describe('Routes /posts/{postId}/tags', () => {
     it('returns 400 HTTP status code when id is not a number', async () => {
       const res = await serverInject({
         method: 'GET',
-        url: `/posts/${post.id}/tags/asdf`,
+        url: '/categories/asdf',
         headers: { authorization }
       }, server);
 
@@ -111,7 +100,7 @@ describe('Routes /posts/{postId}/tags', () => {
     it('returns 404 HTTP status code when post does not exist', async () => {
       const res = await serverInject({
         method: 'GET',
-        url: `/posts/${post.id}/tags/0`,
+        url: '/categories/0',
         headers: { authorization }
       }, server);
 
@@ -119,29 +108,31 @@ describe('Routes /posts/{postId}/tags', () => {
     });
   });
 
-  describe('PUT /posts/{postId}/tags/{id}', () => {
-    let tag;
+  describe('PUT /categories/{id}', () => {
+    let post;
 
     before(async () => {
       const res = await serverInject({
         method: 'POST',
-        url: `/posts/${post.id}/tags`,
+        url: '/categories',
         headers: { authorization },
         payload: {
-          name: 'Nova tag'
+          email: 'aluno@unifacef.com.br',
+          password: 'abc123'
         }
       }, server);
 
-      tag = res.payload;
+      post = res.payload;
     });
 
     it('returns 200 HTTP status code', async () => {
       const res = await serverInject({
         method: 'PUT',
-        url: `/posts/${post.id}/tags/${tag.id}`,
+        url: `/categories/${post.id}`,
         headers: { authorization },
         payload: {
-          name: 'Alteramos a tag'
+          email: 'aluno@unifacef.com.br',
+          password: 'abc123'
         }
       }, server);
 
@@ -151,10 +142,11 @@ describe('Routes /posts/{postId}/tags', () => {
     it('returns 400 HTTP status code when payload is invalid', async () => {
       const res = await serverInject({
         method: 'PUT',
-        url: `/posts/${post.id}/tags/${tag.id}`,
+        url: `/categories/${post.id}`,
         headers: { authorization },
         payload: {
-          name: 'Tag'
+          email: 'aluno@unifacef',
+          password: 'abc123'
         }
       }, server);
 
@@ -164,10 +156,11 @@ describe('Routes /posts/{postId}/tags', () => {
     it('returns 404 HTTP status code when post does not exist', async () => {
       const res = await serverInject({
         method: 'PUT',
-        url: `/posts/${post.id}/tags/0`,
+        url: '/categories/0',
         headers: { authorization },
         payload: {
-          name: 'Nova tag'
+          email: 'aluno@unifacef.com.br',
+          password: 'abc123'
         }
       }, server);
 
@@ -175,26 +168,27 @@ describe('Routes /posts/{postId}/tags', () => {
     });
   });
 
-  describe('DELETE /posts/{postId}/tags/{id}', () => {
-    let tag;
+  describe('DELETE /categories/{id}', () => {
+    let post;
 
     before(async () => {
       const res = await serverInject({
         method: 'POST',
-        url: `/posts/${post.id}/tags`,
+        url: '/categories',
         headers: { authorization },
         payload: {
-          name: 'Nova tag'
+          email: 'aluno@unifacef.com.br',
+          password: 'abc123'
         }
       }, server);
 
-      tag = res.payload;
+      post = res.payload;
     });
 
-    it('returns 200 HTTP status code', async () => {
+    it('returns 204 HTTP status code', async () => {
       const res = await serverInject({
         method: 'DELETE',
-        url: `/posts/${post.id}/tags/${tag.id}`,
+        url: `/categories/${post.id}`,
         headers: { authorization }
       }, server);
 
@@ -204,7 +198,7 @@ describe('Routes /posts/{postId}/tags', () => {
     it('returns 400 HTTP status code when id is not a number', async () => {
       const res = await serverInject({
         method: 'DELETE',
-        url: `/posts/${post.id}/tags/asdf`,
+        url: '/categories/asdf',
         headers: { authorization }
       }, server);
 
@@ -214,7 +208,7 @@ describe('Routes /posts/{postId}/tags', () => {
     it('returns 404 HTTP status code when post does not exist', async () => {
       const res = await serverInject({
         method: 'DELETE',
-        url: `/posts/${post.id}/tags/0`,
+        url: `/categories/${post.id}`,
         headers: { authorization }
       }, server);
 
