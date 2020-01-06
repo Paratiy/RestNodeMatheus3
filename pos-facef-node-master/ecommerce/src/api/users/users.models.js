@@ -1,4 +1,4 @@
-import { Model } from 'sequelize';
+import { Model } from 'sequelize/types';
 import Bcrypt from 'bcryptjs';
 
 export default (sequelize, dataTypes) => {

@@ -1,4 +1,4 @@
-import { Model } from 'sequelize';
+import { Model } from 'sequelize/types';
 
 export default (sequelize, dataTypes) => {
   class Post extends Model {}
